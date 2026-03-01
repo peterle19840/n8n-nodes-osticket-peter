@@ -1,6 +1,6 @@
 # n8n-nodes-osticket
 
-This is an n8n community node for interacting with [osTicket](https://osticket.com/). It allows you to create, retrieve, update, and close tickets directly from your n8n workflows.
+This is an n8n community node for interacting with [osTicket](https://osticket.com/). It allows you to create, retrieve, update, reopen, and close tickets, as well as manage users directly from your n8n workflows.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
@@ -12,9 +12,9 @@ This is an n8n community node for interacting with [osTicket](https://osticket.c
 
 ## Prerequisites
 
-The **Create** operation works with the standard osTicket API.
+The **Ticket > Create** operation works with the standard osTicket API.
 
-For **Get**, **Get Many**, **Update**, and **Close** operations, your osTicket instance needs extended API support. This can be achieved by either:
+For all other operations (Get, Get Many, Update, Close, Reopen, User management), your osTicket instance needs extended API support. This can be achieved by either:
 
 1. Using osTicket with [PR #5019](https://github.com/osTicket/osTicket/pull/5019) merged (extended REST API endpoints)
 2. Installing the [osticket-api-endpoints](https://github.com/markus-michalski/osticket-api-endpoints) community plugin
@@ -34,6 +34,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 | **Get Many** | Retrieve multiple tickets with optional filters |
 | **Update** | Update a ticket (status, priority, department, add message/note, assign staff) |
 | **Close** | Close a ticket by ticket number |
+| **Reopen** | Reopen a previously closed ticket |
 
 #### Create - Fields
 
@@ -48,6 +49,20 @@ Message (add reply), Internal Note, Status, Priority ID, Department ID, Staff ID
 #### Get Many - Filters
 
 Status (Open, Closed, Overdue, Answered), Email, User ID, Limit
+
+### User
+
+| Operation | Description |
+|-----------|-------------|
+| **Create** | Create a new user with email and name |
+| **Get** | Retrieve a user by ID |
+| **Delete** | Delete a user by ID |
+
+#### Create - Fields
+
+**Required:** Email, Name
+
+**Additional Fields:** Phone, Organization ID, Notes
 
 ## Credentials
 
@@ -64,8 +79,8 @@ Enable this option if your osTicket instance uses a self-signed SSL certificate.
 
 Tested with n8n v0.200+ and osTicket v1.17+
 
-- **Create** operation: Works with standard osTicket API
-- **Get / Get Many / Update / Close** operations: Requires extended API endpoints (see [Prerequisites](#prerequisites))
+- **Ticket > Create** operation: Works with standard osTicket API
+- **All other operations**: Requires extended API endpoints (see [Prerequisites](#prerequisites))
 
 ## Resources
 
@@ -74,5 +89,6 @@ Tested with n8n v0.200+ and osTicket v1.17+
 
 ## Version history
 
+- **0.3.0** - Added Reopen Ticket operation. Added User resource (Create, Get, Delete).
 - **0.2.0** - Added Get, Get Many, Update, and Close operations. Extended Create with additional fields.
 - **0.1.0** - Initial Release (Create only). Original by [joffcom](https://github.com/joffcom/n8n-nodes-osticket).

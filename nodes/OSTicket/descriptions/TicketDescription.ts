@@ -62,6 +62,19 @@ export const ticketOperations: INodeProperties[] = [
 				},
 			},
 			{
+				name: 'Reopen',
+				value: 'reopen',
+				action: 'Reopen a closed ticket',
+				description: 'Reopen a previously closed ticket',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/api/tickets.json/{{$parameter["ticketNumber"]}}',
+						json: true,
+					},
+				},
+			},
+			{
 				name: 'Update',
 				value: 'update',
 				action: 'Update a ticket',
@@ -94,7 +107,7 @@ export const ticketFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['ticket'],
-				operation: ['get', 'update', 'close'],
+				operation: ['get', 'update', 'close', 'reopen'],
 			},
 		},
 	},

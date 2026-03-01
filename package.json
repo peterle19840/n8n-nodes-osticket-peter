@@ -1,7 +1,7 @@
 {
   "name": "n8n-nodes-osticket",
-  "version": "0.2.0",
-  "description": "n8n community node for working with OSTicket - Create, Get, Update and Close tickets",
+  "version": "0.3.0",
+  "description": "n8n community node for working with OSTicket - Manage tickets and users",
   "keywords": [
     "n8n-community-node-package",
     "osticket",
