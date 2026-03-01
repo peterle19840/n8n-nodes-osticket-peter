@@ -30,11 +30,27 @@ exports.ticketOperations = [
                 name: 'Close',
                 value: 'close',
                 action: 'Close a ticket',
-                description: 'Close a ticket by number',
+                description: 'Close a ticket by setting status to closed',
+                routing: {
+                    request: {
+                        method: 'PATCH',
+                        url: '=/api/tickets-update.php/{{$parameter["ticketNumber"]}}.json',
+                        json: true,
+                        body: {
+                            status: 'closed',
+                        },
+                    },
+                },
+            },
+            {
+                name: 'Delete',
+                value: 'delete',
+                action: 'Delete a ticket',
+                description: 'Permanently delete a ticket',
                 routing: {
                     request: {
                         method: 'DELETE',
-                        url: '=/api/tickets.json/{{$parameter["ticketNumber"]}}',
+                        url: '=/api/tickets-delete.php/{{$parameter["ticketNumber"]}}.json',
                     },
                 },
             },
@@ -46,7 +62,7 @@ exports.ticketOperations = [
                 routing: {
                     request: {
                         method: 'GET',
-                        url: '=/api/tickets.json/{{$parameter["ticketNumber"]}}',
+                        url: '=/api/tickets-get.php/{{$parameter["ticketNumber"]}}.json',
                     },
                 },
             },
@@ -54,11 +70,11 @@ exports.ticketOperations = [
                 name: 'Get Many',
                 value: 'getAll',
                 action: 'Get many tickets',
-                description: 'Get many tickets',
+                description: 'Search and list tickets',
                 routing: {
                     request: {
                         method: 'GET',
-                        url: '/api/tickets.json',
+                        url: '/api/tickets-search.php',
                     },
                 },
             },
@@ -69,9 +85,12 @@ exports.ticketOperations = [
                 description: 'Reopen a previously closed ticket',
                 routing: {
                     request: {
-                        method: 'POST',
-                        url: '=/api/tickets.json/{{$parameter["ticketNumber"]}}',
+                        method: 'PATCH',
+                        url: '=/api/tickets-update.php/{{$parameter["ticketNumber"]}}.json',
                         json: true,
+                        body: {
+                            status: 'open',
+                        },
                     },
                 },
             },
@@ -82,8 +101,8 @@ exports.ticketOperations = [
                 description: 'Update a ticket by number',
                 routing: {
                     request: {
-                        method: 'PUT',
-                        url: '=/api/tickets.json/{{$parameter["ticketNumber"]}}',
+                        method: 'PATCH',
+                        url: '=/api/tickets-update.php/{{$parameter["ticketNumber"]}}.json',
                         json: true,
                     },
                 },
@@ -103,7 +122,7 @@ exports.ticketFields = [
         displayOptions: {
             show: {
                 resource: ['ticket'],
-                operation: ['get', 'update', 'close', 'reopen'],
+                operation: ['get', 'update', 'close', 'delete', 'reopen'],
             },
         },
     },
@@ -393,6 +412,19 @@ exports.ticketFields = [
                     send: {
                         type: 'query',
                         property: 'limit',
+                    },
+                },
+            },
+            {
+                displayName: 'Query',
+                name: 'query',
+                type: 'string',
+                default: '',
+                description: 'Search query string to filter tickets',
+                routing: {
+                    send: {
+                        type: 'query',
+                        property: 'q',
                     },
                 },
             },
